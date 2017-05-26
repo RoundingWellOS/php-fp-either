@@ -3,61 +3,31 @@
 namespace PhpFp\Either\Test;
 
 use PhpFp\Either\Either;
-use PhpFp\Either\Constructor\{Left, Right};
-
+use PhpFp\Either\Constructor\Left;
+use PhpFp\Either\Constructor\Right;
 class BimapTest extends \PHPUnit_Framework_TestCase
 {
     public function testBimapParameterCount()
     {
-        $count = (new \ReflectionMethod('PhpFp\Either\Constructor\Left::bimap'))
-            ->getNumberOfParameters();
-
-        $this->assertEquals($count,
-            2,
-            'Left::bimap takes two parameters.'
-        );
-
-        $count = (new \ReflectionMethod('PhpFp\Either\Constructor\Right::bimap'))
-            ->getNumberOfParameters();
-
-        $this->assertEquals($count,
-            2,
-            'Right::bimap takes two parameters.'
-        );
+        $count = (new \ReflectionMethod('PhpFp\\Either\\Constructor\\Left::bimap'))->getNumberOfParameters();
+        $this->assertEquals($count, 2, 'Left::bimap takes two parameters.');
+        $count = (new \ReflectionMethod('PhpFp\\Either\\Constructor\\Right::bimap'))->getNumberOfParameters();
+        $this->assertEquals($count, 2, 'Right::bimap takes two parameters.');
     }
-
     public function testBimap()
     {
-        $addOne = function ($x)
-        {
+        $addOne = function ($x) {
             return $x + 1;
         };
-
-        $takeOne = function ($x)
-        {
+        $takeOne = function ($x) {
             return $x - 1;
         };
-
-        $id = function ($x)
-        {
+        $id = function ($x) {
             return $x;
         };
-
         $a = Either::right(2);
         $b = Either::left(2);
-
-        $this->assertEquals(
-            $a->bimap($addOne, $takeOne)
-                ->either($id, $id),
-            1,
-            'Bimaps a Right.'
-        );
-
-        $this->assertEquals(
-            $b->bimap($addOne, $takeOne)
-                ->either($id, $id),
-            3,
-            'Bimaps a Left.'
-        );
+        $this->assertEquals($a->bimap($addOne, $takeOne)->either($id, $id), 1, 'Bimaps a Right.');
+        $this->assertEquals($b->bimap($addOne, $takeOne)->either($id, $id), 3, 'Bimaps a Left.');
     }
 }

@@ -3,48 +3,23 @@
 namespace PhpFp\Either\Test;
 
 use PhpFp\Either\Either;
-use PhpFp\Either\Constructor\{Left, Right};
-
+use PhpFp\Either\Constructor\Left;
+use PhpFp\Either\Constructor\Right;
 class ConstructorTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructorParameterCount()
     {
-        $count = (new \ReflectionClass('PhpFp\Either\Constructor\Left'))
-            ->getConstructor()->getNumberOfParameters();
-
-        $this->assertEquals(
-            $count,
-            1,
-            'Left constructor takes one parameter.'
-        );
-
-        $count = (new \ReflectionClass('PhpFp\Either\Constructor\Right'))
-            ->getConstructor()->getNumberOfParameters();
-
-        $this->assertEquals(
-            $count,
-            1,
-            'Right constructor takes one parameter.'
-        );
+        $count = (new \ReflectionClass('PhpFp\\Either\\Constructor\\Left'))->getConstructor()->getNumberOfParameters();
+        $this->assertEquals($count, 1, 'Left constructor takes one parameter.');
+        $count = (new \ReflectionClass('PhpFp\\Either\\Constructor\\Right'))->getConstructor()->getNumberOfParameters();
+        $this->assertEquals($count, 1, 'Right constructor takes one parameter.');
     }
-
     public function testConstructor()
     {
-        $id = function ($x)
-        {
+        $id = function ($x) {
             return $x;
         };
-
-        $this->assertEquals(
-            Either::right(2)->either($id, $id),
-            2,
-            'Constructs a Right.'
-        );
-
-        $this->assertEquals(
-            Either::left(2)->either($id, $id),
-            2,
-            'Constructs a Left.'
-        );
+        $this->assertEquals(Either::right(2)->either($id, $id), 2, 'Constructs a Right.');
+        $this->assertEquals(Either::left(2)->either($id, $id), 2, 'Constructs a Left.');
     }
 }
