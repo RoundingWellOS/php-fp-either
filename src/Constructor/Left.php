@@ -10,15 +10,6 @@ use PhpFp\Either\Either;
 class Left extends Either
 {
     /**
-     * Construct a new Left instance with a value.
-     * @param mixed $value The value to be wrapped.
-     */
-    public function __construct($value)
-    {
-        return $this->value = $value;
-    }
-
-    /**
      * Do nothing; return the same value.
      * @param Either $that The parameter to apply.
      * @return Either The wrapped result.
@@ -36,7 +27,7 @@ class Left extends Either
      */
     public function bimap(callable $f, callable $_) : Either
     {
-        return new self($f($this->value));
+        return Either::left($f($this->value));
     }
 
     /**
